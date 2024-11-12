@@ -65,6 +65,7 @@ snr1=SNR_Calc(signal,s);
 snr2=SNR_Calc(signal,x);
 disp(snr1);
 disp(snr2);
+audiowrite('quzao.wav', s, fs);
 
 function snr=SNR_Calc(I,In)
 % 计算带噪语音信号的信噪比
