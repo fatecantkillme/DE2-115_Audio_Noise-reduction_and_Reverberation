@@ -109,7 +109,9 @@ function enhanced_signal = spectral_subtraction(x, fs, frame_size, overlap)
     end
 
     % 估计噪声
-    noise_estimated = mean(frames(1:5, :), 1); % 前5帧作为噪声估计
+    noise_frames = frames(~is_speech_frame(frames), :); % 使用语音活动检测（VAD）识别纯噪声帧
+    num_noise_frames = min(5, size(noise_frames, 1)); % 使用最近的5帧噪声
+    noise_estimated = mean(noise_frames(end-num_noise_frames+1:end, :), 1); % 计算最近5帧噪声的平均值作为噪声估计
 
     % 频谱减法
     enhanced_frames = zeros(size(frames));

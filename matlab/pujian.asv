@@ -65,6 +65,7 @@ snr1=SNR_Calc(signal,s);
 snr2=SNR_Calc(signal,x);
 disp(snr1);
 disp(snr2);
+audiowrite('quzao.wav', s, fs);
 
 function snr=SNR_Calc(I,In)
 % 计算带噪语音信号的信噪比
@@ -108,25 +109,37 @@ function enhanced_signal = spectral_subtraction(x, fs, frame_size, overlap)
     end
 
     % 估计噪声
-    noise_estimated = mean(frames(1:5, :), 1); % 前5帧作为噪声估计
+    noise_frames = frames(~is_speech_frame(frames), :); % 使用语音活动检测（VAD）识别纯噪声帧
+    num_noise_frames = min(5, size(noise_frames, 1)); % 使用最近的5帧噪声
+    noise_estimated = mean(noise_frames(end-num_noise_frames+1:end, :), 1); % 计算最近5帧噪声的平均值作为噪声估计
 
     % 频谱减法
     enhanced_frames = zeros(size(frames));
     decay_factor = 0.9; % 衰减因子
+    alpha = 0.98; % 平滑因子
     for i = 1:num_frames
         fft_frame = fft(frames(i, :));
         fft_noise = fft(noise_estimated, length(fft_frame));
         mag_signal = abs(fft_frame) - abs(fft_noise);
         mag_signal(mag_signal < 0) = 0;
+        % 计算后验信噪比
+        post_snr = mag_signal.^2 ./ abs(fft_noise).^2; 
+        % 计算先验信噪比 
+        if i == 1
+            prior_snr = post_snr;
+        else
+            prior_snr = alpha * (enhanced_frames(i-1, :).^2 ./ abs(fft_noise).^2) + (1 - alpha) * max(post_snr - 1, 0);
+        end
+        % 计算增益
+        gain = prior_snr ./ (1 + prior_snr);
 
         % 判断是否有语音
         if is_speech_frame(frames(i, :))
-            enhanced_frames(i, :) = real(ifft(mag_signal .* exp(1j * angle(fft_frame))));
+            enhanced_frames(i, :) = real(ifft(gain .* fft_frame));
             decay_factor = 0.9;
         else
             % 对于相邻的帧进行减弱处理
-            if 
-            enhanced_frames(i, :) = real(ifft(mag_signal .* exp(1j * angle(fft_frame)))) *decay_factor ;
+            enhanced_frames(i, :) = real(ifft(gain .* fft_frame)) *decay_factor ;
             decay_factor = decay_factor * 0.9; % 逐渐减弱
         end
     end
