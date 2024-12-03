@@ -99,6 +99,22 @@ module Audio(
 		.RST(DLY_RST)
 		);
 		
+	wire signed [15:0] rev_audio_outL;
+	wire signed [15:0] rev_audio_outR;
+	Reverb reverb_left (
+   .clk(CLOCK_50),
+   .reset(RST),
+   .din(audio_outL),
+   .dout(rev_audio_outL)
+	);
+
+	Reverb reverb_right (
+	.clk(CLOCK_50),
+	.reset(RST),
+	.din(audio_outR),
+	.dout(rev_audio_outR)
+	);
+		
 	reg [15:0] audio_outL, audio_outR;
 	
 	SRAM inst4(
@@ -499,7 +515,7 @@ begin
 end
 
 //Audio Out
-assign AUD_DACDAT = (AUD_DACLRCK)? audio_outL[~SEL_Cont]: audio_outR[~SEL_Cont] ;
+assign AUD_DACDAT = (AUD_DACLRCK)? rev_audio_outL[~SEL_Cont]: rev_audio_outR[~SEL_Cont] ;
 
 
 endmodule

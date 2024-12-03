@@ -1,0 +1,79 @@
+// Reverb 模块定义（Schroeder 混响）
+module Reverb(
+    input clk,
+    input reset,
+    input signed [15:0] din,
+    output signed [15:0] dout
+);
+    // 参数定义
+    parameter NUM_COMB = 5;
+    parameter COMB_DELAYS [0:4] = {44100, 55100, 66100, 77100, 88100}; // 延迟样本数（根据 fs 调整）
+    parameter COMB_FEEDBACK = 0.7; // 反馈系数
+    parameter NUM_ALLPASS = 2;
+    parameter ALLPASS_DELAYS [0:1] = {225, 556}; // 延迟样本数
+
+    // Comb 滤波器寄存器
+    reg signed [15:0] comb_buffers [0:NUM_COMB-1][0:COMB_DELAYS[0]-1];
+    integer i, j;
+    reg signed [15:0] comb_outputs [0:NUM_COMB-1];
+    reg signed [15:0] comb_in;
+
+    // 初始化 Comb 滤波器
+    always @(posedge clk or negedge reset) begin
+        if (!reset) begin
+            for (i = 0; i < NUM_COMB; i = i + 1) begin
+                for (j = 0; j < COMB_DELAYS[i]; j = j + 1) begin
+                    comb_buffers[i][j] <= 16'sd0;
+                end
+            end
+        end else begin
+            for (i = 0; i < NUM_COMB; i = i + 1) begin
+                comb_in = din + (comb_outputs[i] >>> 1); // 简单反馈
+                comb_buffers[i][COMB_DELAYS[i]-1] <= comb_in;
+                comb_outputs[i] <= comb_buffers[i][0];
+                // 循环移位
+                for (j = 0; j < COMB_DELAYS[i]-1; j = j + 1) begin
+                    comb_buffers[i][j] <= comb_buffers[i][j+1];
+                end
+            end
+        end
+    end
+
+    // 合并 Comb 输出
+    wire signed [15:0] comb_sum;
+    assign comb_sum = comb_outputs[0] + comb_outputs[1] + comb_outputs[2] + comb_outputs[3] + comb_outputs[4];
+
+    // All-pass 滤波器寄存器
+    reg signed [15:0] allpass_buffers [0:NUM_ALLPASS-1][0:ALLPASS_DELAYS[0]-1];
+    reg signed [15:0] allpass_in [0:NUM_ALLPASS-1];
+    reg signed [15:0] allpass_out [0:NUM_ALLPASS-1];
+
+    // 初始化 All-pass 滤波器
+    always @(posedge clk or negedge reset) begin
+        if (!reset) begin
+            for (i = 0; i < NUM_ALLPASS; i = i + 1) begin
+                for (j = 0; j < ALLPASS_DELAYS[i]; j = j + 1) begin
+                    allpass_buffers[i][j] <= 16'sd0;
+                end
+            end
+        end else begin
+            for (i = 0; i < NUM_ALLPASS; i = i + 1) begin
+                allpass_in[i] = comb_sum + (allpass_out[i] >>> 1); // 简单反馈
+                allpass_buffers[i][ALLPASS_DELAYS[i]-1] <= allpass_in[i];
+                allpass_out[i] <= allpass_buffers[i][0];
+                // 循环移位
+                for (j = 0; j < ALLPASS_DELAYS[i]-1; j = j + 1) begin
+                    allpass_buffers[i][j] <= allpass_buffers[i][j+1];
+                end
+            end
+        end
+    end
+
+    // 合并 All-pass 输出
+    wire signed [15:0] allpass_sum;
+    assign allpass_sum = allpass_out[0] + allpass_out[1];
+
+    // 输出
+    assign dout = comb_sum + allpass_sum;
+
+endmodule
