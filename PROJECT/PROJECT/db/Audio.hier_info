@@ -1,7 +1,7 @@
 |Audio
-CLOCK_50 => CLOCK_50.IN3
+CLOCK_50 => CLOCK_50.IN4
 CLOCK_27 => CLOCK_27.IN1
-RST => RST.IN2
+RST => RST.IN3
 I2C_SDAT <> I2C_Config:inst2.I2C_SDAT
 I2C_SCLK <= I2C_Config:inst2.I2C_SCLK
 AUD_ADCLRCK <= audio_clock:inst3.AUD_LRCK
@@ -127,7 +127,7 @@ PB => always2.IN1
 PB => always2.IN1
 PB => PB_DLY.DATAA
 PB => PB_DLY.DATAA
-PB => Selector58.IN5
+PB => Selector74.IN5
 PB => always2.IN1
 PB => always2.IN1
 HIGH => always2.IN1
@@ -142,13 +142,73 @@ RUN_THRU => always2.IN1
 RUN_THRU => RUN_THRU_DLY.DATAIN
 STOP => always2.IN1
 STOP => STOP_DLY.DATAIN
-PROCESS => ~NO_FANOUT~
+PRO => PRO.IN1
 LED[0] <= LED[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 LED[1] <= LED[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 LED[2] <= LED[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 LED[3] <= <GND>
 getinmode => getinmode.IN1
 LED10 <= <GND>
+
+
+|Audio|Process:Process0
+CLK => ~NO_FANOUT~
+RST => ~NO_FANOUT~
+ADC_STBR => ~NO_FANOUT~
+ADC_STBL => ~NO_FANOUT~
+readdata[0] => ~NO_FANOUT~
+readdata[1] => ~NO_FANOUT~
+readdata[2] => ~NO_FANOUT~
+readdata[3] => ~NO_FANOUT~
+readdata[4] => ~NO_FANOUT~
+readdata[5] => ~NO_FANOUT~
+readdata[6] => ~NO_FANOUT~
+readdata[7] => ~NO_FANOUT~
+readdata[8] => ~NO_FANOUT~
+readdata[9] => ~NO_FANOUT~
+readdata[10] => ~NO_FANOUT~
+readdata[11] => ~NO_FANOUT~
+readdata[12] => ~NO_FANOUT~
+readdata[13] => ~NO_FANOUT~
+readdata[14] => ~NO_FANOUT~
+readdata[15] => ~NO_FANOUT~
+writedata[0] <= <GND>
+writedata[1] <= <GND>
+writedata[2] <= <GND>
+writedata[3] <= <GND>
+writedata[4] <= <GND>
+writedata[5] <= <GND>
+writedata[6] <= <GND>
+writedata[7] <= <GND>
+writedata[8] <= <GND>
+writedata[9] <= <GND>
+writedata[10] <= <GND>
+writedata[11] <= <GND>
+writedata[12] <= <GND>
+writedata[13] <= <GND>
+writedata[14] <= <GND>
+writedata[15] <= <GND>
+address[0] <> <UNC>
+address[1] <> <UNC>
+address[2] <> <UNC>
+address[3] <> <UNC>
+address[4] <> <UNC>
+address[5] <> <UNC>
+address[6] <> <UNC>
+address[7] <> <UNC>
+address[8] <> <UNC>
+address[9] <> <UNC>
+address[10] <> <UNC>
+address[11] <> <UNC>
+address[12] <> <UNC>
+address[13] <> <UNC>
+address[14] <> <UNC>
+address[15] <> <UNC>
+address[16] <> <UNC>
+address[17] <> <UNC>
+address[18] <> <UNC>
+address[19] <> <UNC>
+PRO => ~NO_FANOUT~
 
 
 |Audio|Reset_Delay:inst0

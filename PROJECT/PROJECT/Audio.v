@@ -24,7 +24,7 @@ module Audio(
 	output reg [15:0] audio_inR, audio_inL,
 	input REC,											//Toggle Recording
 	input PB,
-	input HIGH, LOW, RUN_THRU, STOP,
+	input HIGH, LOW, RUN_THRU, STOP,PRO,
 	output reg [3:0] LED,
 	
 	input getinmode,
@@ -61,6 +61,7 @@ module Audio(
 	parameter RUN   = 4'b1100;
 	parameter RUNL  = 4'b1101;
 	parameter RUNR  = 4'b1111;
+
 	
 	wire DLY_RST;
 	
