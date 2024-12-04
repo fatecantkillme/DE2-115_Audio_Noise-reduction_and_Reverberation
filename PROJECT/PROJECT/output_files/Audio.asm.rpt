@@ -1,5 +1,5 @@
 Assembler report for Audio
-Thu Jun 06 14:20:37 2024
+Tue Dec 03 23:55:13 2024
 Quartus II 64-Bit Version 12.1 Build 243 01/31/2013 Service Pack 1 SJ Full Version
 
 
@@ -10,7 +10,7 @@ Quartus II 64-Bit Version 12.1 Build 243 01/31/2013 Service Pack 1 SJ Full Versi
   2. Assembler Summary
   3. Assembler Settings
   4. Assembler Generated Files
-  5. Assembler Device Options: C:/Users/Ricardozed0/Desktop/test2/output_files/Audio.sof
+  5. Assembler Device Options: D:/DE2-115_Audio_Noise-reduction_and_Reverberation/PROJECT/PROJECT/output_files/Audio.sof
   6. Assembler Messages
 
 
@@ -37,7 +37,7 @@ applicable agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Thu Jun 06 14:20:37 2024 ;
+; Assembler Status      ; Successful - Tue Dec 03 23:55:13 2024 ;
 ; Revision Name         ; Audio                                 ;
 ; Top-level Entity Name ; Audio                                 ;
 ; Family                ; Cyclone IV E                          ;
@@ -77,24 +77,24 @@ applicable agreement for further details.
 +-----------------------------------------------------------------------------+----------+---------------+
 
 
-+-----------------------------------------------------------+
-; Assembler Generated Files                                 ;
-+-----------------------------------------------------------+
-; File Name                                                 ;
-+-----------------------------------------------------------+
-; C:/Users/Ricardozed0/Desktop/test2/output_files/Audio.sof ;
-+-----------------------------------------------------------+
++-------------------------------------------------------------------------------------------+
+; Assembler Generated Files                                                                 ;
++-------------------------------------------------------------------------------------------+
+; File Name                                                                                 ;
++-------------------------------------------------------------------------------------------+
+; D:/DE2-115_Audio_Noise-reduction_and_Reverberation/PROJECT/PROJECT/output_files/Audio.sof ;
++-------------------------------------------------------------------------------------------+
 
 
-+-------------------------------------------------------------------------------------+
-; Assembler Device Options: C:/Users/Ricardozed0/Desktop/test2/output_files/Audio.sof ;
-+----------------+--------------------------------------------------------------------+
-; Option         ; Setting                                                            ;
-+----------------+--------------------------------------------------------------------+
-; Device         ; EP4CE115F29C7                                                      ;
-; JTAG usercode  ; 0xFFFFFFFF                                                         ;
-; Checksum       ; 0x005B675E                                                         ;
-+----------------+--------------------------------------------------------------------+
++---------------------------------------------------------------------------------------------------------------------+
+; Assembler Device Options: D:/DE2-115_Audio_Noise-reduction_and_Reverberation/PROJECT/PROJECT/output_files/Audio.sof ;
++----------------+----------------------------------------------------------------------------------------------------+
+; Option         ; Setting                                                                                            ;
++----------------+----------------------------------------------------------------------------------------------------+
+; Device         ; EP4CE115F29C7                                                                                      ;
+; JTAG usercode  ; 0xFFFFFFFF                                                                                         ;
+; Checksum       ; 0x005B9E7C                                                                                         ;
++----------------+----------------------------------------------------------------------------------------------------+
 
 
 +--------------------+
@@ -103,14 +103,14 @@ applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Assembler
     Info: Version 12.1 Build 243 01/31/2013 Service Pack 1 SJ Full Version
-    Info: Processing started: Thu Jun 06 14:20:33 2024
+    Info: Processing started: Tue Dec 03 23:55:09 2024
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off Audio -c Audio
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus II 64-Bit Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 4580 megabytes
-    Info: Processing ended: Thu Jun 06 14:20:37 2024
+    Info: Peak virtual memory: 4583 megabytes
+    Info: Processing ended: Tue Dec 03 23:55:13 2024
     Info: Elapsed time: 00:00:04
-    Info: Total CPU time (on all processors): 00:00:04
+    Info: Total CPU time (on all processors): 00:00:02
 
 
